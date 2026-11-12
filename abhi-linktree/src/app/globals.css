@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+html, body { background: #080a1a; }
+body {
+  color: #e8eaff;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+::selection { background: rgba(124, 92, 255, 0.45); }
+
+/* Spotlight that follows the cursor on any element with .spot */
+.spot { position: relative; overflow: hidden; isolation: isolate; }
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--brand, #7c5cff) 30%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.spot:hover::before, .spot:focus-visible::before { opacity: 1; }
+.spot:hover, .spot:focus-visible {
+  border-color: color-mix(in srgb, var(--brand, #7c5cff) 55%, transparent);
+}
+.spot:hover .brand-icon, .spot:focus-visible .brand-icon { color: var(--brand); }
+
+.focus-ring:focus-visible { outline: 2px solid #22d3ee; outline-offset: 3px; }
+
+.grid-fade {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
